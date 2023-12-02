@@ -96,7 +96,7 @@ Visit [Node.js Backend README](./server/README.md) for more details on the Node.
 
 ## API Documentation
 
-Visit `http://localhost:5000/documentation` to explore the API endpoints and functionalities.
+Visit `http://localhost:5000/api/v1/documentation` to explore the API endpoints and functionalities.
 
 <!--
 ## Contributing
