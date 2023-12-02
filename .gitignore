@@ -1,0 +1,43 @@
+# Node.js
+node_modules/
+*/node_modules/
+
+# React
+build/
+dist/
+*.log
+npm-debug.log*
+
+# Backend
+.env
+*.env
+*.env.local
+*.env.*.local
+
+# Visual Studio Code
+.vscode/
+
+# IDE files
+.idea/
+
+# Logs
+logs/
+*.log
+
+# Dependency directories
+.pnpm/
+pnpm-debug.log
+
+# Yarn
+yarn-error.log
+yarn-debug.log*
+yarn.lock
+.pnp/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# File not yet ready for push
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
