@@ -44,8 +44,8 @@ Make sure you have the following installed:
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/boomni/Pathfinder.git
-    cd Pathfinder
+    git clone https://github.com/boomni/pathfinderquiz.git
+    cd pathfinderquiz
     ```
 
 2. Install dependencies:
@@ -88,11 +88,11 @@ Make sure you have the following installed:
 
 ### Frontend
 
-Visit `http://localhost:3000` to access the React frontend.
+Visit [React Frontend README](./client/README.md) for more details on the React frontend.
 
 ### Backend
 
-Visit `http://localhost:8000` to access the Node.js backend.
+Visit [Node.js Backend README](./server/README.md) for more details on the Node.js backend.
 
 ## API Documentation
 

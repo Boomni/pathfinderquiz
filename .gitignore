@@ -1,28 +1,20 @@
 # Node.js
 node_modules/
-*/node_modules/
-
-# React
-build/
-dist/
 *.log
-npm-debug.log*
 
 # Backend
 .env
 *.env
 *.env.local
 *.env.*.local
+/coverage
+/build
 
-# Visual Studio Code
-.vscode/
-
-# IDE files
-.idea/
-
-# Logs
-logs/
-*.log
+# React
+*/build/
+*/dist/
+build/
+dist/
 
 # Dependency directories
 .pnpm/
@@ -41,3 +33,22 @@ Thumbs.db
 # File not yet ready for push
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
+
+# IDE files
+.vscode/
+.idea/
+
+# Logs
+logs/
+*.log
+
+# Misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp.js
