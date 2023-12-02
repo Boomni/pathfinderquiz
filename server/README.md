@@ -39,6 +39,7 @@ If you've cloned the entire Pathfinder Quiz App repository, navigate to the back
 The backend code is organized into various directories to maintain a clean and modular structure. Here's an overview:
 
 - `src/controllers`: Handle route logic and interact with services.
+- `src/config`: Handle configurations, e.g database setup.
 - `src/middleware`: Custom middleware functions.
 - `src/models`: Mongoose models for interacting - with the database.
 - `src/routes`: Express route definitions.
