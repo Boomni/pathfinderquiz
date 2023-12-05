@@ -12,13 +12,6 @@ const register = expressAsyncHandler(async (req, res) => {
   }
   try {
 
-    if (!email) {
-      return res.status(400).json({ error: 'Email is required' });
-    }
-    if (!firstname || !lastname ) {
-      return res.status(400).json({ error: 'Firstname and Lastname are required' });
-    }
-
     const existingUser = await User.findOne({ username });
     if (existingUser) {
       return res.status(409).json({ error: 'Username already exists' });
@@ -50,6 +43,8 @@ const register = expressAsyncHandler(async (req, res) => {
       message: 'User registered successfully',
       newUser,
     });
+
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Registration failed' });
@@ -59,16 +54,16 @@ const register = expressAsyncHandler(async (req, res) => {
 const login = expressAsyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
-  if (!email || !password) {
-    return res.status(400).json({ error: 'Email and password are required' });
+  if (!password || !email) {
+    throw new CustomError('Please fill out both entries!', 400);
   }
 
-  const user = await User.findOne({ email });
-
-  if (!user || !user.comparePassword(password)) {
-    throw new CustomError('Invalid Credentials', 401);
-  }
   try {
+    const user = await User.findOne({ email });
+
+    if (!user || !(await user.comparePassword(password))) {
+      throw new CustomError('Invalid Credentials', 401);
+    }
     const token = jwt.sign(
       { userId: user.id, role: user.role },
       process.env.SECRET_KEY,
@@ -81,7 +76,7 @@ const login = expressAsyncHandler(async (req, res) => {
   );
 
   user.refreshToken = refreshToken;
-  const result = await user.save();
+  await user.save();
   
   res.cookie('jwt', refreshToken, { 
     httpOnly: true,
@@ -99,5 +94,5 @@ const login = expressAsyncHandler(async (req, res) => {
 
 module.exports = {
   register,
-  login,
+  login
 };
