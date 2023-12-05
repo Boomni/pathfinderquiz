@@ -33,7 +33,6 @@ const userSchema = new Schema({
         type: String,
         enum: ["pending", "approved", "rejected"],
     },
-    refreshToken: String
 });
 
 userSchema.methods.comparePassword = async function (password) {

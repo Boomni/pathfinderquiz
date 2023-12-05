@@ -5,7 +5,8 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerOptions = require("./utils/swaggerOptions");
 const { errorHandler } = require("./middlewares/errorHandler");
-const authRoutes = require("./routes/authRoutes");
+const authRoute = require("./routes/authRoute");
+const userRoute = require("./routes/userRoute");
 
 require("dotenv").config();
 const PORT = process.env.PORT;
@@ -21,7 +22,8 @@ app.use(express.json());
 app.use("/api/v1/documentation", swaggerUi.serve, swaggerUi.setup(swaggerJsDoc(swaggerOptions)));
 
 // Authentication Route
-app.use(authRoutes);
+app.use("/api/v1/users", authRoute);
+app.use("/api/v1/users", userRoute)
 
 // Error Handler
 app.use(errorHandler);
