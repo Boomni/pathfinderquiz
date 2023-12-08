@@ -1,18 +1,18 @@
 // middleware/authMiddleware.js
 
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const User = require('../models/userModel');
 
 const authMiddleware = (requiredRoles) => {
   return async (req, res, next) => {
     try {
-      const token = req.header('Authorization').replace('Bearer ', '');
+      const token = req.header('Authorization');
 
       // Verify the token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
       // Find the user based on the decoded information
-      const user = await User.findOne({ _id: decoded._id});
+      const user = await User.findOne({ _id: decoded.UserId});
 
       // Check if the user exists and has the required role
       if (!user || !requiredRoles.includes(user.role)) {
@@ -31,8 +31,4 @@ const authMiddleware = (requiredRoles) => {
   };
 };
 
-const isAdmin = authMiddleware(['admin']);
-const isSuperuser = authMiddleware(['superuser']);
-const isPathfinder = authMiddleware(['pathfinder']);
-
-module.exports = { isAdmin, isSuperuser, isPathfinder };
+module.exports = authMiddleware;
