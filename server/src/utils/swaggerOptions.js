@@ -1,3 +1,7 @@
+require('dotenv').config();
+
+const port = process.env.PORT || 5000;
+
 const options = {
     definition: {
         openapi: "3.0.3",
@@ -16,11 +20,25 @@ const options = {
         },
         servers: [
             {
-                url: "http://localhost:5000/api/v1",
+                url: `http://localhost:${port}/api/v1/`,
             },
         ],
+        security: [
+            {
+                apiKeyAuth: [],
+            },
+        ],
+        components: {
+            securitySchemes: {
+                apiKeyAuth: {
+                    type: "apiKey",
+                    in: "header",
+                    name: "Authorization",
+                },
+            },
+        },
     },
-    apis: ["../../src/routes/*.js"],
+    apis: ["./src/routes/*.js"],
 };
 
 module.exports = options;

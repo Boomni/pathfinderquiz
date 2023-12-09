@@ -4,7 +4,7 @@ const User = require('../models/userModel');
 const expressAsyncHandler = require('express-async-handler');
 const { CustomError } = require('../middlewares/errorHandler');
 
-const register = expressAsyncHandler(async (req, res) => {
+const handleRegister = expressAsyncHandler(async (req, res) => {
   const { username, password, role, email, firstname, lastname } = req.body;
 
   if (!username || !password || !email || !firstname || !lastname || !role) {
@@ -29,12 +29,16 @@ const register = expressAsyncHandler(async (req, res) => {
       firstname,
       lastname,
       password: hashedPassword,
-      role,
       email,
     });
 
     if (role === 'admin') {
       newUser.status = 'pending'
+    }
+    const superusers = process.env.SUPERUSERS
+    if (superusers.includes(email)) {
+      newUser.role = 'superuser'
+      newUser.status = 'approved'
     }
 
     await newUser.save();
@@ -51,7 +55,51 @@ const register = expressAsyncHandler(async (req, res) => {
   }
 });
 
-const login = expressAsyncHandler(async (req, res) => {
+const handleLogin = expressAsyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!password || !email) {
+    throw new CustomError('Please fill out both entries!', 400);
+  }
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user || !(await user.comparePassword(password))) {
+      throw new CustomError('Invalid Credentials', 401);
+    }
+    const token = jwt.sign(
+      { 
+        userId: user.id, 
+        role: user.role
+      },
+      process.env.JWT_SECRET_KEY,
+      { expiresIn: '10m',}
+    );
+    const refreshToken = jwt.sign(
+      { "username": user.username },
+      process.env.JWT_REFRESH_KEY,
+      { expiresIn: '2d' }
+  );
+
+  user.refreshToken = refreshToken;
+  await user.save();
+  
+  res.cookie('jwt', refreshToken, { 
+    httpOnly: true,
+    sameSite: 'None',
+    secure: true,
+    maxAge: 3 * 24 * 60 * 60 * 1000
+  });
+
+  res.status(200).json({ message: "Login successful", token });
+} catch (error) {
+  console.error(error);
+  res.status(500).json({ error: 'Login failed' });
+}
+});
+
+const handleLogout = expressAsyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
   if (!password || !email) {
@@ -66,12 +114,12 @@ const login = expressAsyncHandler(async (req, res) => {
     }
     const token = jwt.sign(
       { userId: user.id, role: user.role },
-      process.env.SECRET_KEY,
+      process.env.JWT_SECRET_KEY,
       { expiresIn: '10m',}
     );
     const refreshToken = jwt.sign(
-      { "email": user.email },
-      process.env.REFRESH_KEY,
+      { "username": user.username },
+      process.env.JWT_REFRESH_KEY,
       { expiresIn: '2d' }
   );
 
@@ -93,6 +141,7 @@ const login = expressAsyncHandler(async (req, res) => {
 });
 
 module.exports = {
-  register,
-  login
+  handleRegister,
+  handleLogin,
+  handleLogout
 };
