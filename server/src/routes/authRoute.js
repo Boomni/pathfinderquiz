@@ -129,6 +129,6 @@ router.post('/register', authController.handleRegister);
  *       500:
  *         description: Internal Server Error
  */
-router.get('/logout', authController.handleLogout);
+router.post('/logout', authController.handleLogout);
 
 module.exports = router;

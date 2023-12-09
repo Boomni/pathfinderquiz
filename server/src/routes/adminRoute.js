@@ -49,7 +49,7 @@ router.get('/requests', authMiddleware(['superuser']), adminController.getAdminR
  *       500:
  *         description: Internal server error.
  */
-router.get('/requests/approved', authMiddleware(['superuser']), adminController.getAdminRequestsApproved);
+router.get('/approved', authMiddleware(['superuser']), adminController.getAdminRequestsApproved);
 
 /**
  * @swagger
@@ -63,6 +63,6 @@ router.get('/requests/approved', authMiddleware(['superuser']), adminController.
  *       500:
  *         description: Internal server error.
  */
-router.get('/requests/rejected', authMiddleware(['superuser']), adminController.getAdminRequestsRejected);
+router.get('/rejected', authMiddleware(['superuser']), adminController.getAdminRequestsRejected);
 
 module.exports = router;

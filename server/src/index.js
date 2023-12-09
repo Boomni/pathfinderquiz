@@ -13,15 +13,15 @@ const resourceRoute = require("./routes/resourceRoute");
 const adminRoute = require("./routes/adminRoute");
 const { errorHandler } = require("./middlewares/errorHandler");
 const authRoute = require("./routes/authRoute");
-const morgan = require("morgan");
 const authMiddleware = require("./middlewares/authMiddleware");
+const historyRoute = require('./routes/historyRoute');
 
 require('dotenv').config();
 
 const PORT = process.env.PORT;
 connectDatabase();
 
-app = express();
+const app = express();
 
 app.use(cors());
 app.use(express.json());
@@ -35,8 +35,8 @@ app.use("/api/v1/questions", questionRoute);
 app.use("/api/v1/quiz", quizRoute);
 app.use("/api/v1/resources", resourceRoute);
 app.use("/api/v1/admin", adminRoute);
+app.use('/api/v1/history', historyRoute);
 
-app.use(morgan('dev'));
 app.use(authMiddleware);
 app.use(errorHandler);
 

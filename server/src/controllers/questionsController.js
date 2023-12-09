@@ -122,9 +122,54 @@ const updateQuestion = async (req, res) => {
     }
   };
 
+  const getAllQuestions = async (req, res) => {
+    try {
+      const questions = await Question.find();
+      res.status(200).json({ questions });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  };
+  
+  const getQuestionsByClass = async (req, res) => {
+    try {
+      const classId = req.params.classId;
+      const questions = await Question.find({ classId });
+      
+      if (!questions || questions.length === 0) {
+        return res.status(404).json({ error: 'No questions found for the specified class' });
+      }
+  
+      res.status(200).json({ questions });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  };
+  
+  const getQuestionsByCategoryInClass = async (req, res) => {
+    try {
+      const { classId, categoryId } = req.params;
+      const questions = await Question.find({ classId, categoryId });
+  
+      if (!questions || questions.length === 0) {
+        return res.status(404).json({ error: 'No questions found for the specified class and category' });
+      }
+  
+      res.status(200).json({ questions });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  };
+
 module.exports = {
     addQuestion,
     getQuestionById,
     updateQuestion,
-    deleteQuestion
+    deleteQuestion,
+    getAllQuestions,
+    getQuestionsByClass,
+    getQuestionsByCategoryInClass
 }

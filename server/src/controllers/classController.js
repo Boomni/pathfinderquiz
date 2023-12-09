@@ -1,4 +1,5 @@
 const Class = require('../models/classModel');
+require('dotenv')
 
 const addClass = async (req, res) => {
   try {
@@ -14,6 +15,11 @@ const addClass = async (req, res) => {
     const existingClass = await Class.findOne({ name });
     if (existingClass) {
       return res.status(409).json({ error: 'Class already exists' });
+    }
+
+    const classList = process.env.CLASSES;
+    if (!classList.toLowerCase().includes(name.toLowerCase())) {
+      return res.status(400).json({ error: 'Invalid class name' });
     }
 
     const newClass = new Class({

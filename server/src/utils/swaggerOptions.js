@@ -12,7 +12,8 @@ const options = {
             \n\nThis API provides access to a trivia quiz platform designed for Pathfinder club members. Users can answer quizzes, access educational resources, and track their progress. Administrators can manage user registrations, resources, and quiz content, ensuring a seamless experience for all club members. \
             \n\nWhether you're a Pathfinder club member or an administrator, this documentation will guide you through the functionalities and endpoints available in our platform. Let's get started on your journey with Pathfinder Quiz! \
             \n\nUseful links: \
-            \n- [The Pathfinder Quiz repository](https://github.com/boomni/pathfinderquiz.git)",
+            \n- [The Pathfinder Quiz repository](https://github.com/boomni/pathfinderquiz.git) \
+            \n- [About Pathfinders](https://nocsdayouthmd.weebly.com/pathfinders.html)" ,
             contact: {
                 name: "Boomni Jonathan",
                 email: "rejoiceoye1@gmail.com",
