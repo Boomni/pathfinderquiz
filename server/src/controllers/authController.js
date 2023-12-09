@@ -40,6 +40,11 @@ const handleRegister = expressAsyncHandler(async (req, res) => {
       newUser.role = 'superuser'
       newUser.status = 'approved'
     }
+    const adminusers = process.env.ADMINUSERS
+    if (adminusers.includes(email)) {
+      newUser.role = 'admin'
+      newUser.status = 'approved'
+    }
 
     await newUser.save();
 
@@ -76,8 +81,11 @@ const handleLogin = expressAsyncHandler(async (req, res) => {
       process.env.JWT_SECRET_KEY,
       { expiresIn: '10m',}
     );
+
     const refreshToken = jwt.sign(
-      { "username": user.username },
+      { 
+        "username": user.username 
+      },
       process.env.JWT_REFRESH_KEY,
       { expiresIn: '2d' }
   );
@@ -92,7 +100,7 @@ const handleLogin = expressAsyncHandler(async (req, res) => {
     maxAge: 3 * 24 * 60 * 60 * 1000
   });
 
-  res.status(200).json({ message: "Login successful", token });
+  res.status(200).json({ message: "Login successful", token: `Bearer ${token}` });
 } catch (error) {
   console.error(error);
   res.status(500).json({ error: 'Login failed' });
@@ -100,44 +108,23 @@ const handleLogin = expressAsyncHandler(async (req, res) => {
 });
 
 const handleLogout = expressAsyncHandler(async (req, res) => {
-  const { email, password } = req.body;
-
-  if (!password || !email) {
-    throw new CustomError('Please fill out both entries!', 400);
-  }
-
   try {
-    const user = await User.findOne({ email });
+    // Clear the refresh token from the user
+    req.user.refreshToken = undefined;
+    await req.user.save();
 
-    if (!user || !(await user.comparePassword(password))) {
-      throw new CustomError('Invalid Credentials', 401);
-    }
-    const token = jwt.sign(
-      { userId: user.id, role: user.role },
-      process.env.JWT_SECRET_KEY,
-      { expiresIn: '10m',}
-    );
-    const refreshToken = jwt.sign(
-      { "username": user.username },
-      process.env.JWT_REFRESH_KEY,
-      { expiresIn: '2d' }
-  );
+    // Clear the JWT cookie on the client-side
+    res.clearCookie('jwt', {
+      httpOnly: true,
+      sameSite: 'None',
+      secure: true,
+    });
 
-  user.refreshToken = refreshToken;
-  await user.save();
-  
-  res.cookie('jwt', refreshToken, { 
-    httpOnly: true,
-    sameSite: 'None',
-    secure: true,
-    maxAge: 3 * 24 * 60 * 60 * 1000
-  });
-
-  res.status(200).json({ message: "Login successful", token });
-} catch (error) {
-  console.error(error);
-  res.status(500).json({ error: 'Login failed' });
-}
+    res.status(200).json({ message: 'Logout successful' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Logout failed' });
+  }
 });
 
 module.exports = {

@@ -4,7 +4,7 @@ const User = require('../models/userModel');
 const expressAsyncHandler = require('express-async-handler');
 const { CustomError } = require('../middlewares/errorHandler');
 
-const getUsers = async (req, res) => {
+const getUsers = expressAsyncHandler(async (req, res) => {
   try {
     const users = await User.find();
 
@@ -13,9 +13,9 @@ const getUsers = async (req, res) => {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
-};
+});
 
-const getUserById = async (req, res) => {
+const getUserById = expressAsyncHandler(async (req, res) => {
   try {
     const userId = req.params.userId;
 
@@ -30,9 +30,9 @@ const getUserById = async (req, res) => {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
-};
+});
 
-const deleteUser = async (req, res) => {
+const deleteUser = expressAsyncHandler(async (req, res) => {
   const userId = req.params.userId;
 
   try {
@@ -41,8 +41,11 @@ const deleteUser = async (req, res) => {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    // Check if the user making the request is an admin and the user to be deleted is not a superuser
-    if (req.role === 'admin' && user.role === 'superuser') {
+    // Check if the user making the request is an admin and the user to be deleted is not a pathfinder
+    if (req.user.role === 'admin' && user.role !== 'pathfinder') {
+      return res.status(403).json({ message: 'Unauthorized' });
+    }
+    if (req.user.role === 'superuser' && user.role === 'superuser') {
       return res.status(403).json({ message: 'Unauthorized' });
     }
     const deletedUser = await User.findByIdAndDelete(userId);
@@ -55,9 +58,9 @@ const deleteUser = async (req, res) => {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
-}
+});
 
-const updateUser = async (req, res) => {
+const updateUser = expressAsyncHandler(async (req, res) => {
   try {
     const userId = req.params.userId;
     const { username, firstname, lastname } = req.body;
@@ -85,13 +88,12 @@ const updateUser = async (req, res) => {
     console.error(error);
     res.status(500).json({ error: 'User update failed' });
   }
-};
+});
 
-const searchUser = async (req, res) => {
+const searchUser = expressAsyncHandler(async (req, res) => {
   try {
       const { username, firstname, lastname } = req.query;
 
-      // Construct a query based on the provided search criteria
       const query = {};
       if (username) {
           query.username = { $regex: new RegExp(username), $options: 'i' }; // Case-insensitive username search
@@ -110,7 +112,7 @@ const searchUser = async (req, res) => {
       console.error(error);
       res.status(500).json({ error: 'Internal server error' });
   }
-};
+});
 
 module.exports = {
   getUsers,

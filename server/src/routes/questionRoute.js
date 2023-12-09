@@ -106,8 +106,6 @@ const authMiddleware = require("../middlewares/authMiddleware");
  *       500:
  *         description: Internal server error
  */
-
-
 router.post('/add/:classId/:categoryId', authMiddleware(['admin', 'superuser']), questionsController.addQuestion);
 
 /**
@@ -226,5 +224,97 @@ router.put('/update/:questionId', authMiddleware(['admin', 'superuser']), questi
  *         description: Internal server error
  */
 router.delete('/delete/:questionId', authMiddleware(['admin', 'superuser']), questionsController.deleteQuestion);
+
+/**
+ * @swagger
+ * /questions:
+ *   get:
+ *     summary: Get all questions
+ *     tags:
+ *       - Questions
+ *     responses:
+ *       200:
+ *         description: Questions retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 questions:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Question'
+ *       500:
+ *         description: Internal server error
+ */
+router.get('/', questionsController.getAllQuestions);
+
+/**
+ * @swagger
+ * /questions/class/{classId}:
+ *   get:
+ *     summary: Get questions by class
+ *     tags:
+ *       - Questions
+ *     parameters:
+ *       - in: path
+ *         name: classId
+ *         required: true
+ *         description: The ID of the class for which to retrieve questions.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Questions retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 questions:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Question'
+ *       500:
+ *         description: Internal server error
+ */
+router.get('/class/:classId', questionsController.getQuestionsByClass);
+
+/**
+ * @swagger
+ * /questions/category/{classId}/{categoryId}:
+ *   get:
+ *     summary: Get questions by category in a class
+ *     tags:
+ *       - Questions
+ *     parameters:
+ *       - in: path
+ *         name: classId
+ *         required: true
+ *         description: The ID of the class for which to retrieve questions.
+ *         schema:
+ *           type: string
+ *       - in: path
+ *         name: categoryId
+ *         required: true
+ *         description: The ID of the category for which to retrieve questions.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Questions retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 questions:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Question'
+ *       500:
+ *         description: Internal server error
+ */
+router.get('/category/:classId/:categoryId', questionsController.getQuestionsByCategoryInClass);
 
 module.exports = router;

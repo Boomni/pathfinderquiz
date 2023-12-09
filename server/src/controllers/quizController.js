@@ -1,16 +1,17 @@
 const express = require('express');
 const Quiz = require('../models/quizModel');
+const User = require('../models/userModel');
+const HistoryController = require('../controllers/historyController');
+
+const findQuestionById = (questions, questionId) => {
+  return questions.find((q) => q._id == questionId);
+};
 
 const handleStartQuiz = async (req, res) => {
   try {
-    // User preferences from the request (e.g., category, class, difficulty, number of questions)
     const { userId, categoryId, classId, difficulty, numQuestions } = req.body;
 
-    const questions = await Quiz.find({
-      categoryId,
-      classId,
-      difficulty,
-    })
+    const questions = await Quiz.find({ categoryId, classId, difficulty })
       .limit(numQuestions)
       .exec();
 
@@ -32,28 +33,19 @@ const handleStartQuiz = async (req, res) => {
   }
 };
 
-// Submit a user's answer for a question
 const handleSubmitQuiz = async (req, res) => {
   try {
-    // Retrieve the user's answer and session ID from the request
     const { sessionId, questionId, userAnswer } = req.body;
 
-    // Retrieve the quiz session
     const quizSession = await Quiz.findById(sessionId).exec();
+    const question = findQuestionById(quizSession.questions, questionId);
 
-    // Find the question by ID
-    const question = quizSession.questions.find((q) => q._id == questionId);
-
-    // Validate the user's answer and calculate the score
     const isCorrect = question.correctAnswer === userAnswer;
     const score = isCorrect ? 1 : 0;
 
-    // Update the session with the user's answer and score
     const answer = { questionId, userAnswer, isCorrect };
-    //quizSession.userAnswers.push(answer);
     quizSession.score += score;
 
-    // Save the updated session
     await quizSession.save();
 
     res.json({ message: 'Answer submitted', isCorrect, score });
@@ -63,30 +55,19 @@ const handleSubmitQuiz = async (req, res) => {
   }
 };
 
-// End a quiz session and save it to history
 const handleEndQuiz = async (req, res) => {
   try {
-    // Retrieve the session ID from the request
     const { sessionId } = req.body;
-
-    // Retrieve the quiz session
     const quizSession = await Quiz.findById(sessionId).exec();
-
-    // Save the session details to the user's quiz history
     const user = await User.findById(quizSession.user).exec();
-    const historyItem = new History({
-      category: quizSession.categoryId,
-      class: quizSession.classId,
-      difficulty: quizSession.difficulty,
-      score: quizSession.score,
-      userAnswers: quizSession.userAnswers,
-    });
-    user.quizHistory.push(historyItem);
-    await user.save();
+
+    const { category, classId, difficulty, score, userAnswers } = quizSession;
+
+    await HistoryController.addHistoryItem(user._id, category, classId, difficulty, score, userAnswers);
 
     await quizSession.remove();
 
-    res.json({ message: 'Quiz session ended', historyItem });
+    res.json({ message: 'Quiz session ended successfully' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
@@ -96,5 +77,5 @@ const handleEndQuiz = async (req, res) => {
 module.exports = {
   handleStartQuiz,
   handleEndQuiz,
-  handleSubmitQuiz
+  handleSubmitQuiz,
 };

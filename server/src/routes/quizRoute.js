@@ -1,3 +1,5 @@
+// quizRoutes.js
+
 const router = require("express").Router();
 const quizController = require('../controllers/quizController');
 
@@ -24,37 +26,33 @@ const quizController = require('../controllers/quizController');
  *             properties:
  *               userId:
  *                 type: string
- *                 description: The ID of the user starting the quiz session.
  *               categoryId:
  *                 type: string
- *                 description: The category of the quiz.
  *               classId:
  *                 type: string
- *                 description: The class of the quiz.
  *               difficulty:
  *                 type: string
- *                 description: The difficulty level of the quiz.
  *               numQuestions:
  *                 type: number
- *                 description: The number of questions in the quiz.
  *     responses:
  *       200:
  *         description: Quiz session started successfully
  *         content:
  *           application/json:
  *            schema:
- *              type: object
- *              properties:
- *                message:
- *                  type: string
- *                  description: Quiz session started successfully
- *                quizSession:
- *                  type: object
- *                  description: The details of the quiz session.
+ *              $ref: '#/components/schemas/QuizResponse'
  *       400:
  *         description: Bad Request
+ *         content:
+ *           application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Error'
  *       500:
  *         description: Internal server error
+ *         content:
+ *           application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Error'
  */
 router.post('/start', quizController.handleStartQuiz);
 
@@ -74,34 +72,29 @@ router.post('/start', quizController.handleStartQuiz);
  *             properties:
  *               sessionId:
  *                 type: string
- *                 description: The ID of the quiz session.
  *               questionId:
  *                 type: string
- *                 description: The ID of the question being answered.
  *               userAnswer:
  *                 type: string
- *                 description: The user's answer to the question.
  *     responses:
  *       200:
  *         description: Answer submitted successfully
  *         content:
  *           application/json:
  *            schema:
- *              type: object
- *              properties:
- *                message:
- *                  type: string
- *                  description: Answer submitted successfully
- *                isCorrect:
- *                  type: boolean
- *                  description: Indicates whether the answer is correct.
- *                score:
- *                  type: number
- *                  description: The score earned for the answer.
+ *              $ref: '#/components/schemas/AnswerResponse'
  *       400:
  *         description: Bad Request
+ *         content:
+ *           application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Error'
  *       500:
  *         description: Internal server error
+ *         content:
+ *           application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Error'
  */
 router.post('/submit', quizController.handleSubmitQuiz);
 
@@ -133,9 +126,6 @@ router.post('/submit', quizController.handleSubmitQuiz);
  *                message:
  *                  type: string
  *                  description: Quiz session ended successfully
- *                historyItem:
- *                  type: object
- *                  description: The details of the quiz session saved to history.
  *       400:
  *         description: Bad Request
  *       500:
