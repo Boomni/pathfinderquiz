@@ -41,8 +41,11 @@ const deleteUser = expressAsyncHandler(async (req, res) => {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    // Check if the user making the request is an admin and the user to be deleted is not a superuser
-    if (req.role === 'admin' && user.role === 'superuser') {
+    // Check if the user making the request is an admin and the user to be deleted is not a pathfinder
+    if (req.user.role === 'admin' && user.role !== 'pathfinder') {
+      return res.status(403).json({ message: 'Unauthorized' });
+    }
+    if (req.user.role === 'superuser' && user.role === 'superuser') {
       return res.status(403).json({ message: 'Unauthorized' });
     }
     const deletedUser = await User.findByIdAndDelete(userId);
@@ -91,7 +94,6 @@ const searchUser = expressAsyncHandler(async (req, res) => {
   try {
       const { username, firstname, lastname } = req.query;
 
-      // Construct a query based on the provided search criteria
       const query = {};
       if (username) {
           query.username = { $regex: new RegExp(username), $options: 'i' }; // Case-insensitive username search

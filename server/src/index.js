@@ -15,6 +15,7 @@ const { errorHandler } = require("./middlewares/errorHandler");
 const authRoute = require("./routes/authRoute");
 const authMiddleware = require("./middlewares/authMiddleware");
 const historyRoute = require('./routes/historyRoute');
+const verifyJWT = require("./middlewares/verifyJWT");
 
 require('dotenv').config();
 
@@ -25,19 +26,19 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-
-app.use("/api/v1/documentation", swaggerUi.serve, swaggerUi.setup(swaggerJsDoc(swaggerOptions)));
-app.use("/api/v1/users", userRoute);
 app.use("/api/v1/users", authRoute);
+app.use("/api/v1/documentation", swaggerUi.serve, swaggerUi.setup(swaggerJsDoc(swaggerOptions)));
+
+app.use(verifyJWT);
+app.use("/api/v1/users", userRoute);
 app.use("/api/v1/classes", classRoute);
 app.use("/api/v1/categories", categoryRoute);
 app.use("/api/v1/questions", questionRoute);
 app.use("/api/v1/quiz", quizRoute);
 app.use("/api/v1/resources", resourceRoute);
-app.use("/api/v1/admin", adminRoute);
+app.use("/api/v1/admin", authMiddleware(['superuser']), adminRoute);
 app.use('/api/v1/history', historyRoute);
 
-app.use(authMiddleware);
 app.use(errorHandler);
 
 app.listen(PORT, () => {

@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const adminController = require("../controllers/adminController");
-const authMiddleware = require("../middlewares/authMiddleware");
 
 /**
  * @swagger
@@ -21,7 +20,7 @@ const authMiddleware = require("../middlewares/authMiddleware");
  *       500:
  *         description: Internal server error.
  */
-router.get('/', authMiddleware(['superuser']), adminController.getAdminUsers);
+router.get('/', adminController.getAdminUsers);
 
 /**
  * @swagger
@@ -35,7 +34,7 @@ router.get('/', authMiddleware(['superuser']), adminController.getAdminUsers);
  *       500:
  *         description: Internal server error.
  */
-router.get('/requests', authMiddleware(['superuser']), adminController.getAdminRequests);
+router.get('/requests', adminController.getAdminRequests);
 
 /**
  * @swagger
@@ -49,7 +48,7 @@ router.get('/requests', authMiddleware(['superuser']), adminController.getAdminR
  *       500:
  *         description: Internal server error.
  */
-router.get('/approved', authMiddleware(['superuser']), adminController.getAdminRequestsApproved);
+router.get('/approved', adminController.getAdminRequestsApproved);
 
 /**
  * @swagger
@@ -63,6 +62,6 @@ router.get('/approved', authMiddleware(['superuser']), adminController.getAdminR
  *       500:
  *         description: Internal server error.
  */
-router.get('/rejected', authMiddleware(['superuser']), adminController.getAdminRequestsRejected);
+router.get('/rejected', adminController.getAdminRequestsRejected);
 
 module.exports = router;
