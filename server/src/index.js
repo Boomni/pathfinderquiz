@@ -1,27 +1,26 @@
-const express = require("express");
-const cors = require("cors");
-const swaggerUi = require("swagger-ui-express");
-const swaggerJsDoc = require("swagger-jsdoc");
-const connectDatabase = require("./config/db");
-const swaggerOptions = require("./utils/swaggerOptions");
-const userRoute = require("./routes/userRoute");
-const classRoute = require("./routes/classRoute");
-const categoryRoute = require("./routes/categoryRoute");
-const questionRoute = require("./routes/questionRoute");
-const quizRoute = require("./routes/quizRoute");
-const resourceRoute = require("./routes/resourceRoute");
-const adminRoute = require("./routes/adminRoute");
-const { errorHandler } = require("./middlewares/errorHandler");
-const authRoute = require("./routes/authRoute");
-const authMiddleware = require("./middlewares/authMiddleware");
-const historyRoute = require('./routes/historyRoute');
-const verifyJWT = require("./middlewares/verifyJWT");
+const express = require("express"),
+    cors = require("cors");
+    swaggerUi = require("swagger-ui-express");
+    swaggerJsDoc = require("swagger-jsdoc"),
+    connectDatabase = require("./config/db"),
+    swaggerOptions = require("./utils/swaggerOptions"),
+    userRoute = require("./routes/userRoute"),
+    classRoute = require("./routes/classRoute"),
+    categoryRoute = require("./routes/categoryRoute"),
+    questionRoute = require("./routes/questionRoute"),
+    quizRoute = require("./routes/quizRoute"),
+    resourceRoute = require("./routes/resourceRoute"),
+    adminRoute = require("./routes/adminRoute"),
+    { errorHandler } = require("./middlewares/errorHandler"),
+    authRoute = require("./routes/authRoute"),
+    authMiddleware = require("./middlewares/authMiddleware"),
+    historyRoute = require('./routes/historyRoute'),
+    verifyJWT = require("./middlewares/verifyJWT"),
+    dotenv = require('dotenv').config(),
+    PORT = process.env.PORT,
 
-require('dotenv').config();
 
-const PORT = process.env.PORT;
 connectDatabase();
-
 const app = express();
 
 app.use(cors());

@@ -33,15 +33,6 @@ Thumbs.db
 # File not yet ready for push
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
-server/src/routes/*.js
-#!server/src/routes/userRoute.js
-!server/src/routes/authRoute.js
-
-server/src/controllers/*.js
-#!server/src/controllers/userController.js
-
-server/src/models/*.js
-!server/src/models/userModel.js
 
 # IDE files
 .vscode/

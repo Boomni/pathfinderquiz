@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Friend",
+    "description": "The Pathfinder Friend class level is a course of study in learning, skills, and physical fitness that will help one to be a better neighbor now and a friend of God throughout eternity. Friends are Pathfinders in the 5th grade. Friends recite the Pathfinder law and pledge, earn the Friend reading certificate, and more. Friends can earn some fun and exciting honors such as Red Alert, Basic Sewing, Dogs, Beginning Swimming, Scrapbooking, Model Cars, and Camping Skills I."
+  },
+  {
+    "name": "Companion",
+    "description": "The Pathfinder Companion class level is a course of study in learning, skills, and physical fitness that will give more meaning to life and companionship with Jesus Christ every hour of the day. Companions are Pathfinders in 6th grade. Companions recite the Pathfinder law and pledge, earn the Companion reading certificate, and more. Companions can earn some fun and exciting honors such as Drilling and Marching, Leather Craft, Sign Language, Reptiles, Flowers, Basketball, and Camping Skills II."
+  },
+  {
+    "name": "Explorer",
+    "description": "The Pathfinder Explorer class level is a course of study that will help one to find new adventure in exploring God's Word and His created works. Explorers are Pathfinders in 7th grade. Explorers recite the Pathfinder law and pledge, illustrate through words and actions the Pathfinder pledge meaning, and earn the Explorer reading certificate. Explorers can earn some fun and exciting honors such as Christian Grooming and Manners, Family Life, Cake Decorating, Textile Painting, Track and Field, Basic Rescue, and Camping Skills III."
+  },
+  {
+    "name": "Ranger",
+    "description": "The Pathfinder Ranger class level is a course of study that will open up new areas of discovery in the natural and spiritual world to secure true and genuine happiness. Rangers are Pathfinders in 8th grade. Rangers recite the Pathfinder pledge and law, illustrate through words and actions the Pathfinder law meaning, and earn the Ranger reading certificate. Rangers can earn some fun and exciting honors such as Christian Citizenship, First Aid, Quilting, Photography, Bee Keeping, Automobile Mechanics, and Camping Skills IV."
+  },
+  {
+    "name": "Voyager",
+    "description": "The Pathfinder Voyager class level is a course of study in physical, mental, cultural, and spiritual development that challenges the teen to develop a wholesome self-concept and Christian lifestyle. Voyagers are Pathfinders in 9th grade. Voyagers recite the Adventist Youth (AY) aim, motto, and pledge, illustrate through words and actions the AY aim meaning, and earn the Voyager reading certificate. Voyagers can earn some fun and exciting honors such as Internet - Advanced, Scuba Diving, Advanced Communications, Advanced Genealogy, Paper Quilling - Advanced, Outdoor Leadership, and Wilderness Living. Additionally, Voyagers teach Camping Skills I and Camping Skills II to other Pathfinders."
+  },
+  {
+    "name": "Guide",
+    "description": "The Pathfinder Guide class level is a course of study that emphasizes personal growth and spiritual discoveries and prepares the Pathfinder for development of new skills in leadership and survival techniques. Guides are Pathfinders in 10th grade. Guides recite the Adventist Youth (AY) aim, pledge, and motto, illustrate through words and actions the AY aim meaning, and earn the Guide reading certificate. Guides can earn some fun and exciting honors such as Digital Photography, Christian Drama, Geocaching - Advanced, Copper Enameling - Advanced, House Painting - Interior, Pioneering, and Junior Youth Leadership. Additionally, Guides teach Knot Tying, Red Alert, Camping Skills III, and Camping Skills IV to other Pathfinders."
+  }
+]

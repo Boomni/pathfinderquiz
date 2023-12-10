@@ -210,4 +210,52 @@ router.delete('/delete/:userId', authMiddleware(['admin', 'superuser']), userCon
  */
 router.put('/update/:userId', userController.updateUser);
 
+/**
+ * @swagger
+ * /users/profile:
+ *   get:
+ *     summary: Get the profile details of the authenticated user
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Profile details retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       401:
+ *         description: Unauthorized (user not authenticated)
+ *       500:
+ *         description: Internal server error
+ */
+router.get('/profile', userController.getUserProfile);
+
+/**
+ * @swagger
+ * /users/profile/update:
+ *   put:
+ *     summary: Update the profile details of the authenticated user
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       200:
+ *         description: Profile details updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       401:
+ *         description: Unauthorized (user not authenticated)
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
+ */
+router.put('/profile/update', userController.updateUserProfile);
+
 module.exports = router;
