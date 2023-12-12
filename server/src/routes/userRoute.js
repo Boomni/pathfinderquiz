@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const { handleRegister } = require("../controllers/authController");
 const userController = require('../controllers/userController');
 const authMiddleware = require("../middlewares/authMiddleware");
 
@@ -208,7 +207,7 @@ router.delete('/delete/:userId', authMiddleware(['admin', 'superuser']), userCon
  *       500:
  *         description: Internal server error
  */
-router.put('/update/:userId', userController.updateUser);
+router.put('/update/:userId', authMiddleware(['admin', 'superuser']), userController.updateUser);
 
 /**
  * @swagger

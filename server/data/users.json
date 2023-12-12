@@ -1,0 +1,98 @@
+[
+    {
+      "username": "pathfinderUser1",
+      "password": "securePassword1",
+      "role": "pathfinder",
+      "email": "pathfinder1@mail.com",
+      "firstname": "Alice",
+      "lastname": "Johnson"
+    },
+    {
+      "username": "superuser1",
+      "password": "securePassword2",
+      "role": "superuser",
+      "email": "superuser1@mail.com",
+      "firstname": "Bob",
+      "lastname": "Smith"
+    },
+    {
+      "username": "adminUser1",
+      "password": "securePassword3",
+      "role": "admin",
+      "email": "admin1@mail.com",
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    {
+      "username": "pathfinderUser2",
+      "password": "securePassword4",
+      "role": "pathfinder",
+      "email": "pathfinder2@mail.com",
+      "firstname": "Eva",
+      "lastname": "Williams"
+    },
+    {
+      "username": "superuser2",
+      "password": "securePassword5",
+      "role": "superuser",
+      "email": "superuser2@mail.com",
+      "firstname": "Charlie",
+      "lastname": "Brown"
+    },
+    {
+      "username": "adminUser2",
+      "password": "securePassword6",
+      "role": "admin",
+      "email": "admin2@mail.com",
+      "firstname": "Jane",
+      "lastname": "Smith"
+    },
+    {
+      "username": "pathfinderUser3",
+      "password": "securePassword7",
+      "role": "pathfinder",
+      "email": "pathfinder3@mail.com",
+      "firstname": "Daniel",
+      "lastname": "Taylor"
+    },
+    {
+      "username": "superuser3",
+      "password": "securePassword8",
+      "role": "superuser",
+      "email": "superuser3@mail.com",
+      "firstname": "Grace",
+      "lastname": "Miller"
+    },
+    {
+      "username": "adminUser3",
+      "password": "securePassword9",
+      "role": "admin",
+      "email": "admin3@mail.com",
+      "firstname": "Michael",
+      "lastname": "Brown"
+    },
+    {
+      "username": "pathfinderUser4",
+      "password": "securePassword10",
+      "role": "pathfinder",
+      "email": "pathfinder4@mail.com",
+      "firstname": "Olivia",
+      "lastname": "Anderson"
+    },
+    {
+      "username": "superuser4",
+      "password": "securePassword11",
+      "role": "superuser",
+      "email": "superuser4@mail.com",
+      "firstname": "Robert",
+      "lastname": "Johnson"
+    },
+    {
+      "username": "adminUser4",
+      "password": "securePassword12",
+      "role": "admin",
+      "email": "admin4@mail.com",
+      "firstname": "Emily",
+      "lastname": "Davis"
+    }
+]

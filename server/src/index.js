@@ -16,15 +16,17 @@ const express = require("express"),
     authMiddleware = require("./middlewares/authMiddleware"),
     historyRoute = require('./routes/historyRoute'),
     verifyJWT = require("./middlewares/verifyJWT"),
-    dotenv = require('dotenv').config(),
-    PORT = process.env.PORT,
-
+    dotenv = require('dotenv').config({ path: './src/config/.env' }),
+    cookieParser = require('cookie-parser'),
+    PORT = process.env.PORT || 4000,
 
 connectDatabase();
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
+
 app.use("/api/v1/users", authRoute);
 app.use("/api/v1/documentation", swaggerUi.serve, swaggerUi.setup(swaggerJsDoc(swaggerOptions)));
 

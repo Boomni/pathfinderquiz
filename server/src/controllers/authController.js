@@ -53,7 +53,6 @@ const handleRegister = expressAsyncHandler(async (req, res) => {
       newUser,
     });
 
-
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Registration failed' });
@@ -74,17 +73,17 @@ const handleLogin = expressAsyncHandler(async (req, res) => {
       throw new CustomError('Invalid Credentials', 401);
     }
     const token = jwt.sign(
-      { 
-        userId: user.id, 
+      {
+        userId: user.id,
         role: user.role
       },
       process.env.JWT_SECRET_KEY,
-      { expiresIn: '10m',}
+      { expiresIn: '1m',}
     );
 
     const refreshToken = jwt.sign(
       { 
-        "username": user.username 
+        userId: user.id 
       },
       process.env.JWT_REFRESH_KEY,
       { expiresIn: '2d' }
@@ -92,7 +91,7 @@ const handleLogin = expressAsyncHandler(async (req, res) => {
 
   user.refreshToken = refreshToken;
   await user.save();
-  
+
   res.cookie('jwt', refreshToken, { 
     httpOnly: true,
     sameSite: 'None',
@@ -109,11 +108,9 @@ const handleLogin = expressAsyncHandler(async (req, res) => {
 
 const handleLogout = expressAsyncHandler(async (req, res) => {
   try {
-    // Clear the refresh token from the user
     req.user.refreshToken = undefined;
     await req.user.save();
 
-    // Clear the JWT cookie on the client-side
     res.clearCookie('jwt', {
       httpOnly: true,
       sameSite: 'None',
