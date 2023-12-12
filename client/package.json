@@ -15,7 +15,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "tailwind": "npx tailwindcss -i ./src/index.css -o ./src/main.css --watch",
+    "prettier": "npx prettier --write ./src/**/*.{js,jsx,ts,tsx}"
   },
   "eslintConfig": {
     "extends": [
@@ -38,11 +40,24 @@
   "homepage": ".",
   "description": "Pathfinder Quiz App Frontend",
   "main": "src/index.js",
-  "keywords": ["react", "frontend", "pathfinder", "quiz", "adventist", "AYM"],
+  "keywords": [
+    "react",
+    "frontend",
+    "pathfinder",
+    "quiz",
+    "adventist",
+    "AYM"
+  ],
   "author": "Jonathan Boomni",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/boomni/pathfinderquiz.git"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "prettier-plugin-tailwindcss": "^0.5.9",
+    "tailwindcss": "^3.3.6"
   }
 }
